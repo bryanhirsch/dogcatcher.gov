@@ -1,0 +1,14 @@
+name = SPS ERS Integration
+description = Integrates the SPS module with Entity Revision Scheduling (ERS)
+core = 7.x
+package = "Site Preview System"
+
+dependencies[] = sps
+dependencies[] = ers
+
+files[] = tests/*.test
+
+; Information added by drush on 2015-03-20
+version = "7.x-1.0-beta1+29-dev"
+project = "sps"
+datestamp = "1426817677"

@@ -1,0 +1,11 @@
+name = Workbench
+description = Workbench editorial suite.
+package = Workbench
+core = 7.x
+configure = admin/config/workbench/settings
+dependencies[] = views
+
+; Information added by drush on 2015-03-20
+version = "7.x-1.2+2-dev"
+project = "workbench"
+datestamp = "1426817675"

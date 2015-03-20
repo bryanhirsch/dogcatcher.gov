@@ -1,0 +1,10 @@
+name = Draggableviews Test
+description = Provides views for testing.
+dependencies[] = draggableviews
+package = Views
+core = 7.x
+hidden = TRUE
+; Information added by drush on 2015-03-20
+version = "7.x-2.0+56-dev"
+project = "draggableviews"
+datestamp = "1426817665"

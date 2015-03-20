@@ -1,0 +1,9 @@
+name = Options element
+description = A custom form element for entering the options in select lists, radios, or checkboxes.
+core = 7.x
+package = User interface
+
+; Information added by drush on 2015-03-20
+version = "7.x-1.9+1-dev"
+project = "options_element"
+datestamp = "1426817670"

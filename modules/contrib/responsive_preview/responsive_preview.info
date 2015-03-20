@@ -1,0 +1,10 @@
+name = 'Responsive Preview'
+description = 'Provides a component that previews a page in various device dimensions.'
+package = User interface
+core = 7.x
+files[] = responsive_preview.test
+
+; Information added by drush on 2015-03-20
+version = "7.x-1.1+5-dev"
+project = "responsive_preview"
+datestamp = "1426817671"

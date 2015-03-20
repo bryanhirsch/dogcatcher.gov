@@ -1,0 +1,12 @@
+name = Default config
+description = Use features as default configuration without having to deal with overriden features.
+core = 7.x
+package = configuration
+dependencies[] = features
+
+
+
+; Information added by drush on 2015-03-20
+version = "7.x-1.0-alpha10+1-dev"
+project = "defaultconfig"
+datestamp = "1426817662"

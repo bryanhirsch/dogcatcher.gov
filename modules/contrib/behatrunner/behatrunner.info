@@ -1,0 +1,15 @@
+name = Behat Runner
+core = 7.x
+package = Development
+
+dependencies[] = composer_manager
+dependencies[] = entity
+dependencies[] = views
+dependencies[] = views_bulk_operations
+
+files[] = includes/BehatRunnerScenario.inc
+
+; Information added by drush on 2015-03-20
+version = "7.x-1.0-beta3+7-dev"
+project = "behatrunner"
+datestamp = "1426817660"

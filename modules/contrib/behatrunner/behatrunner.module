@@ -1,0 +1,179 @@
+<?php
+/**
+ * @file
+ * behatrunner module implementation
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function behatrunner_menu() {
+  $items = array();
+
+  $items['admin/config/development/behatrunner'] = array(
+    'title' => 'Configure Behat Runner',
+    'description' => 'Configure Behat Runner settings.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('behatrunner_admin_form'),
+    'access arguments' => array('administer behat runner'),
+    'file' => '/includes/behatrunner.admin.inc',
+  );
+
+  $items['admin/config/development/behatrunner/settings'] = array(
+    'title' => 'Configuration',
+    'description' => 'Configure Behat Runner settings.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('behatrunner_admin_form'),
+    'access arguments' => array('administer behat runner'),
+    'file' => '/includes/behatrunner.admin.inc',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_views_api().
+ */
+function behatrunner_views_api() {
+  return array(
+    'api' => 3,
+    'path' => drupal_get_path('module', 'behatrunner') . '/includes/views',
+    'template path' => drupal_get_path('module', 'behatrunner') . '/themes',
+  );
+}
+
+/**
+ * Implements hook_behat_info().
+ */
+function behatrunner_behat_info() {
+  $info = array(
+    'paths' => array(
+      // Specify the directory in which .feature files are located, relative
+      // to the module directory.
+      'features' => 'features',
+    ),
+  );
+
+  return $info;
+}
+
+/**
+ * Implements hook_action_info().
+ */
+function behatrunner_action_info() {
+  return array(
+    'behatrunner_scenario_execute_action' => array(
+      'type' => 'behatrunner_scenario',
+      'label' => t('Test scenario'),
+      'configurable' => FALSE,
+    ),
+  );
+}
+
+/**
+ * Callback for "Test scenario" aciton.
+ */
+function behatrunner_scenario_execute_action(&$entity, $context = array()) {
+  if (!empty($entity->bsid)) {
+    module_load_include('inc', 'behatrunner', 'includes/behatrunner');
+    behatrunner_execute_tests(array($entity));
+  }
+}
+
+/**
+ * Implements hook_entity_info().
+ */
+function behatrunner_entity_info() {
+  return array(
+    'behatrunner_scenario' => array(
+      'label' => t('Behat Runner Scenario'),
+      'entity class' => 'BehatRunnerScenario',
+      'controller class' => 'BehatRunnerScenarioController',
+      'base table' => 'behatrunner_scenario',
+      'uri callback' => 'behatrunner_scenario_uri',
+      'fieldable' => TRUE,
+      'entity keys' => array(
+        'id' => 'bsid',
+      ),
+      'static cache' => TRUE,
+      'module' => 'behatrunner_scenario',
+      'views controller class' => 'EntityDefaultViewsController',
+    ),
+  );
+}
+
+/**
+ * Implements hook_entity_property_info().
+ */
+function behatrunner_entity_property_info() {
+  $info = array();
+  $properties = &$info['behatrunner_scenario']['properties'];
+
+  $properties['bsid'] = array(
+    'label' => 'Behat Runner Scenario ID',
+    'description' => t('The unique ID for the behatrunner_test_location.'),
+    'type' => 'integer',
+    'schema field' => 'bsid',
+  );
+  $properties['title'] = array(
+    'label' => 'title',
+    'description' => t('The human-readable title of this scenario.'),
+    'type' => 'varchar',
+    'schema field' => 'title',
+  );
+  $properties['location'] = array(
+    'label' => 'Location',
+    'description' => t('The location of the scenario, relative to the Drupal base, in the form of path/to/filename:line-number'),
+    'type' => 'varchar',
+    'schema field' => 'location',
+  );
+  $properties['module'] = array(
+    'label' => 'Module',
+    'description' => t('The module to which this scenario belongs.'),
+    'type' => 'varchar',
+    'schema field' => 'module',
+  );
+}
+
+/**
+ * Implements hook_permission().
+ */
+function behatrunner_permission() {
+  $permissions = array(
+    'create behat scenario entities' => array(
+      'title' => t('Create behat scenario'),
+      'description' => t('Allows users to create behat scenario.'),
+      'restrict access' => TRUE,
+    ),
+    'view behat scenario entities' => array(
+      'title' => t('View behat scenario'),
+      'description' => t('Allows users to view behat scenario.'),
+      'restrict access' => TRUE,
+    ),
+    'administer behat runner' => array(
+      'title' => t('Administer Behat Runner'),
+      'description' => t('Grants all permission for behat runner.'),
+      'restrict access' => TRUE,
+    ),
+  );
+  return $permissions;
+}
+
+/**
+ * Access callback.
+ */
+function behatrunner_test_location_access($op, $projectqa_phploc_result, $account = NULL, $entity_type = NULL) {
+  global $user;
+  if (!isset($account)) {
+    $account = $user;
+  }
+  switch ($op) {
+    case 'create':
+      return user_access('administer behatrunner_test_location entities', $account)
+          || user_access('create behatrunner_test_location entities', $account);
+    case 'view':
+      return user_access('administer behatrunner_test_location entities', $account)
+          || user_access('view behatrunner_test_location entities', $account);
+  }
+}

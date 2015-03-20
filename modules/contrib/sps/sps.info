@@ -1,0 +1,14 @@
+name = Site Preview System
+description = The framework for the Content Staging System
+package = "Site Preview System"
+core = 7.x
+php = 5.3
+
+dependencies[] = xautoload
+
+files[] = tests/*.test
+
+; Information added by drush on 2015-03-20
+version = "7.x-1.0-beta1+29-dev"
+project = "sps"
+datestamp = "1426817677"

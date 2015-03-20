@@ -1,0 +1,12 @@
+name = SPS Test Module
+description = SPS Test Module
+package = "Site Preview System"
+
+core = 7.x
+
+dependencies[] = sps
+
+; Information added by drush on 2015-03-20
+version = "7.x-1.0-beta1+29-dev"
+project = "sps"
+datestamp = "1426817677"

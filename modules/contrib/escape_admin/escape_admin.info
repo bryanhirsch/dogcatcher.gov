@@ -1,0 +1,11 @@
+name = Escape Admin
+description = Provides a button on the toolbar to escape the administration area (replaces the Home button).
+core = 7.x
+package = User interface
+recommends[] = toolbar
+recommends[] = navbar
+
+; Information added by drush on 2015-03-20
+version = "7.x-1.1+1-dev"
+project = "escape_admin"
+datestamp = "1426817664"

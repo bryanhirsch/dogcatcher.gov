@@ -1,0 +1,19 @@
+{
+    "name": "drupal/behatrunner",
+    "type": "drupal-module",
+    "description": "Runs Behats test for Drupal.",
+    "keywords": ["behat", "drupal"],
+    "homepage": "",
+    "license": "GPL-2.0+",
+    "authors": [
+        {
+            "name": "Nate Swart"
+        },
+        {
+            "name": "Matthew Grasmick"
+        }
+    ],
+    "require": {
+        "drupal/drupal-extension": "~1.0.1"
+    }
+}

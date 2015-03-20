@@ -1,0 +1,12 @@
+name = Contextual Administration Views Bulk Operations
+description = Contextual Administration plugins for use with Views Bulk Operations.
+core = 7.x
+package = Contextual Administration
+dependencies[] = context_admin
+dependencies[] = views_bulk_operations
+
+
+; Information added by drush on 2015-03-20
+version = "7.x-1.1+5-dev"
+project = "context_admin"
+datestamp = "1426817662"

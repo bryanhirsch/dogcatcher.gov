@@ -1,0 +1,79 @@
+<?php
+
+/**
+ * @file
+ * Magic Block Entity
+ */
+
+/**
+ * Implements hook_form_alter();
+ */
+function magic_beans_form_ctools_block_content_type_edit_form_alter(&$form, &$form_state, $form_id) {
+  // Use the pane info to acquire the magical psudeo-delta.
+  $delta = substr($form_state['pane']->subtype, 5);
+  $result = _magic_beans_lookup($delta);
+  if (isset($result['bean'])) {
+    $bean = reset($result['bean']);
+    $bean = bean_load($bean->bid);
+    include_once drupal_get_path('module', 'bean') . '/includes/bean.pages.inc';
+    $bean_form = drupal_get_form('bean_form', $bean);
+    // Combine forms in a somewhat ill-advised manner.
+    foreach($bean_form as $key => $values) {
+      if (!isset($form[$key])) {
+        $form[$key] = $values;
+      }
+    }
+    $form['label']['#access'] = FALSE;
+    unset($form['actions']);
+    if (module_exists('panopoly_magic') && isset($form['#panopoly_magic_preview_info'])) {
+      foreach ($form['#post_render'] as $key => $post_render) {
+        if ($post_render == 'panopoly_magic_form_post_render_preview') {
+          unset($form['#post_render'][$key]);
+        }
+      }
+      unset($form['#panopoly_magic_preview_info']);
+    }
+    $form['#submit'][] = 'magic_beans_form_submit';
+  }
+}
+
+/**
+ * Implements hook_module_implements_alter()
+ */
+function magic_beans_module_implements_alter(&$implementations, $hook) {
+  if ($hook == 'form_alter' && isset($implementations['magic_beans'])) {
+    $group = $implementations['magic_beans'];
+    unset($implementations['magic_beans']);
+    $implementations['magic_beans'] = $group;
+  }
+}
+
+/**
+ * Submit function for magic bean form
+ */
+function magic_beans_form_submit($form, &$form_state) {
+  $bean = bean_load($form_state['values']['bean']->bid);
+  $bean->title = $form_state['input']['title'];
+  foreach ($bean->data as $key => $values) {
+    $bean->data[$key] = $form_state['input'][$key];
+  }
+  $bean->view_mode = $form_state['input']['view_mode'];
+  // Avoid dataloss.
+  if (empty($form_state['input']['is_new_revision'])) {
+    $bean->default_revision = TRUE;
+  }
+  $bean->save();
+}
+
+/**
+ * Helper function for finding a bean based on its delta.
+ */
+function _magic_beans_lookup($delta) {
+  // Query for the actual Bean using proper delta.
+  $query = new EntityFieldQuery();
+  $result = $query->entityCondition('entity_type', 'bean')
+    ->propertyCondition('delta', $delta)
+    ->range(0, 1)
+    ->execute();
+  return $result;
+}

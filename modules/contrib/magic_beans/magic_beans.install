@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * Install file for the Magic Bean module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function magic_beans_install() {
+  db_update('system')
+    ->fields(array('weight' => 6))
+    ->condition('name', 'magic_beans')
+    ->execute();
+}

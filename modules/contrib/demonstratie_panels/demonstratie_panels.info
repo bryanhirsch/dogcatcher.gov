@@ -1,0 +1,10 @@
+name = "Demonstratie Panels"
+description = "Panel layout and style definitions related to the Demonstratie theme."
+core = "7.x"
+
+; Information added by Drupal.org packaging script on 2015-03-17
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "demonstratie_panels"
+datestamp = "1426622590"
+

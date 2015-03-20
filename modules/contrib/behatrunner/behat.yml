@@ -1,0 +1,16 @@
+default:
+  extensions:
+    Behat\MinkExtension\Extension:
+      goutte: ~
+      default_session: goutte
+      javascript_session: selenium2
+      selenium2:
+        wd_host: 'http://127.0.0.1:4444/wd/hub'
+      base_url: http://local.drupal7
+    Drupal\DrupalExtension\Extension:
+      blackbox: ~
+      api_driver: drupal
+      drupal:
+          drupal_root: "/Users/matthew.grasmick/Sites/personal/drupal7"
+      drush:
+          alias: '@self'

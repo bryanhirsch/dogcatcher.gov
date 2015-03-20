@@ -1,0 +1,9 @@
+name = Revision operation scheduler
+description = Schedule operations of node revisions for future dates.
+core = 7.x
+recommends[] = date_popup
+
+; Information added by drush on 2015-03-20
+version = "7.x-1.0-rc1+0-dev"
+project = "revision_scheduler"
+datestamp = "1426817672"
